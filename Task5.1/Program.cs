@@ -12,6 +12,7 @@ namespace Task5._1
             matrix[10, 7] = 7456;
             matrix[10, 1] = 4567;
             matrix[1, 7] = 36;
+            matrix[1, 2] = 0;
             Console.WriteLine("string");
             Console.WriteLine(matrix.ToString());
 

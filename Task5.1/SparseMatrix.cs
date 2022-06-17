@@ -33,18 +33,24 @@ namespace Task5._1
             {
                 ArgumentCheck(i, j);
 
-                if (value == 0)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-
                 if (_sparseMatrix.ContainsKey((i, j)))
                 {
-                    _sparseMatrix[(i, j)] = value;
+                    if (value == 0)
+                    {
+                        _sparseMatrix.Remove((i, j));
+                    }
+                    else
+                    {
+                        _sparseMatrix[(i, j)] = value;
+                    }
+
                 }
                 else
                 {
-                    _sparseMatrix.Add((i, j), value);
+                    if (value != 0)
+                    {
+                        _sparseMatrix.Add((i, j), value);
+                    }
                 }
             }
         }
