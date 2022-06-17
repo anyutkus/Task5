@@ -47,7 +47,7 @@ namespace Task5._2
 
         public IEnumerable<string> GetAuthors()
         {
-            return _authors.Select(x => x.ToString());
+            return _authors;
         }
     }
 }
