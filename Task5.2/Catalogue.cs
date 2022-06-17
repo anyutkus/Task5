@@ -24,7 +24,7 @@ namespace Task5._2
             var ISBN = ISBNCheck(key);
             _catalogue.Add(ISBN, value);
 
-            foreach(var val in value.GetAuthors())
+            foreach(var val in value.Authors)
             {
                 _authors.Add(val);
             }
@@ -56,14 +56,14 @@ namespace Task5._2
 
         public IEnumerable<string> BooksList(string author)
         {
-            return _catalogue.Where(x => x.Value.GetAuthors().Contains(author)).OrderBy(x => x.Value.PublishingDate).Select(x => x.Value.ToString());
+            return _catalogue.Where(x => x.Value.Authors.Contains(author)).OrderBy(x => x.Value.PublishingDate).Select(x => x.Value.ToString());
         }
 
         public IEnumerable<(string, int)> BooksAmount()
         {
             foreach (var author in _authors)
             {
-                int count = _catalogue.Values.Count(auth => auth.GetAuthors().Contains(author.ToString()));
+                int count = _catalogue.Values.Count(auth => auth.Authors.Contains(author.ToString()));
                 yield return (author.ToString(), count);
             }
         }

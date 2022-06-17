@@ -7,6 +7,11 @@ namespace Task5._2
         public DateOnly? PublishingDate { get; set; }
         private HashSet<string> _authors = new();
 
+        public IEnumerable<string> Authors
+        {
+            get => _authors;
+        }
+
         public Book(string title, DateOnly? date = null, params string[] authors)
         {
             if (string.IsNullOrEmpty(title))
@@ -43,11 +48,6 @@ namespace Task5._2
                 }
             }
             return str;
-        }
-
-        public IEnumerable<string> GetAuthors()
-        {
-            return _authors;
         }
     }
 }
