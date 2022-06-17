@@ -7,9 +7,9 @@ namespace Task5._1
 {
     public class SparseMatrix : IEnumerable<long>
     {
-        private Dictionary<(int row, int column), long> _sparseMatrix = new Dictionary<(int, int), long>();
-        private int _rows;
-        private int _columns;
+        private readonly Dictionary<(int row, int column), long> _sparseMatrix = new Dictionary<(int, int), long>();
+        private int Rows { get; init; }
+        private int Columns { get; init; }
 
         public SparseMatrix(int row, int column)
         {
@@ -17,24 +17,23 @@ namespace Task5._1
             {
                 throw new ArgumentOutOfRangeException();
             }
-            _rows = row;
-            _columns = column;
+            Rows = row;
+            Columns = column;
         }
 
         public long this[int i, int j]
         {
             get
             {
-                if (i > _rows || i <= 0 || j > _columns || j <= 0)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
+                ArgumentCheck(i, j);
 
-                return _sparseMatrix.ContainsKey((i, j)) ? _sparseMatrix.Where(x => x.Key == (i, j)).Select(x => x.Value).First() : 0;
+                return _sparseMatrix.ContainsKey((i, j)) ? _sparseMatrix[(i,j)] : 0;
             }
             set
             {
-                if (i > _rows || i <= 0 || j > _columns || j <= 0)
+                ArgumentCheck(i, j);
+
+                if (value == 0)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
@@ -50,11 +49,19 @@ namespace Task5._1
             }
         }
 
+        private void ArgumentCheck(int i, int j)
+        {
+            if (i > Rows || i <= 0 || j > Columns || j <= 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+        }
+
         public IEnumerator<long> GetEnumerator()
         {
-            for (var i = 1; i <= _rows; i++)
+            for (var i = 1; i <= Rows; i++)
             {
-                for(var j = 1; j <= _columns; j++)
+                for(var j = 1; j <= Columns; j++)
                 {
                     yield return this[i, j];
                 }
@@ -64,9 +71,9 @@ namespace Task5._1
         public override string ToString()
         {
             var str = "";
-            for(var i = 1; i <= _rows; i++)
+            for(var i = 1; i <= Rows; i++)
             {
-                for(var j = 1; j <= _columns; j++)
+                for(var j = 1; j <= Columns; j++)
                 {
                     str += string.Format("{0,10:D}", this[i,j].ToString());
                 }
@@ -91,21 +98,7 @@ namespace Task5._1
 
         public int GetCount(long value)
         {
-            if (_sparseMatrix.ContainsValue(value) || value == 0)
-            {
-                if (value == 0)
-                {
-                    return _rows * _columns - _sparseMatrix.Count();
-                }
-                else
-                {
-                    return _sparseMatrix.Where(x => x.Value == value).Count();
-                }
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException();
-            }
+            return value == 0 ? Rows * Columns - _sparseMatrix.Count() : _sparseMatrix.Where(x => x.Value == value).Count();
         }
     }
 }

@@ -1,48 +1,53 @@
 ﻿using System;
 namespace Task5._2
 {
-	public class Book
-	{
-		public string Title { get; set; }
-		public DateOnly? PublishingDate { get; set; }
-		public HashSet<string> Authors = new HashSet<string>();
+    public class Book
+    {
+        public string Title { get; set; }
+        public DateOnly? PublishingDate { get; set; }
+        private HashSet<string> _authors = new();
 
-		public Book(string title, DateOnly? date = null, params string[] authors)
-		{
-			if(String.IsNullOrEmpty(title))
+        public Book(string title, DateOnly? date = null, params string[] authors)
+        {
+            if (string.IsNullOrEmpty(title))
             {
-				throw new ArgumentException();
+                throw new ArgumentException();
             }
-			Title = title;
-			PublishingDate = date;
+            Title = title;
+            PublishingDate = date;
 
-			if(authors != null)
+            if (authors != null)
             {
-				foreach(var author in authors)
+                foreach (var author in authors)
                 {
-					Authors.Add(author);
+                    _authors.Add(author);
                 }
             }
-		}
+        }
 
         public override string ToString()
         {
-			var str = Title + " " + PublishingDate.ToString() + " ";
-			var amount = Authors.Count;
-			var k = 0;
-			foreach(var author in Authors)
+            var str = Title + " " + PublishingDate.ToString() + " ";
+            var amount = _authors.Count;
+            var k = 0;
+            foreach (var author in _authors)
             {
-				if(k + 1 == amount)
+                if (k + 1 == amount)
                 {
-					str += author;
+                    str += author;
                 }
-				else
+                else
                 {
-					str += author + ", ";
-					k++;
+                    str += author + ", ";
+                    k++;
                 }
             }
-			return str;
+            return str;
+        }
+
+        public IEnumerable<string> GetAuthors()
+        {
+            return _authors.Select(x => x.ToString());
         }
     }
 }

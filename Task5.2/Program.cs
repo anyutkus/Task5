@@ -21,6 +21,8 @@ namespace Task5._2
             catalogue1.Add("125-2-34-5-87654-8", b3);
             catalogue1.Add("125-2-34-5-85654-8", b4);
             catalogue1.Add("125-2-34-5-85654-4", b5);
+            Book b6 = new Book("FаBook", null);
+            catalogue1.Add("123-2-34-5-87657-8", b6);
 
             Console.WriteLine(catalogue1.GetBook("123-2-34-5-87654-8").ToString());
 
