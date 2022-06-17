@@ -43,7 +43,6 @@ namespace Task5._1
                     {
                         _sparseMatrix[(i, j)] = value;
                     }
-
                 }
                 else
                 {
@@ -95,11 +94,7 @@ namespace Task5._1
 
         public IEnumerable<(int,int,long)> GetNonzeroElements()
         {
-            var elements = _sparseMatrix.OrderBy(x => x.Key.column).OrderBy(x => x.Key.row).Select(x => (x.Key.column, x.Key.row, x.Value));
-            foreach (var element in elements)
-            {
-                yield return element;
-            }
+            return _sparseMatrix.OrderBy(x => x.Key.column).OrderBy(x => x.Key.row).Select(x => (x.Key.column, x.Key.row, x.Value));
         }
 
         public int GetCount(long value)
