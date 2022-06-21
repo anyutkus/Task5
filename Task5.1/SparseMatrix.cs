@@ -8,8 +8,8 @@ namespace Task5._1
     public class SparseMatrix : IEnumerable<long>
     {
         private readonly Dictionary<(int row, int column), long> _sparseMatrix = new Dictionary<(int, int), long>();
-        private int Rows { get; init; }
-        private int Columns { get; init; }
+        public int Rows { get; }
+        public int Columns { get; }
 
         public SparseMatrix(int row, int column)
         {
@@ -94,7 +94,7 @@ namespace Task5._1
 
         public IEnumerable<(int,int,long)> GetNonzeroElements()
         {
-            return _sparseMatrix.OrderBy(x => x.Key.column).OrderBy(x => x.Key.row).Select(x => (x.Key.column, x.Key.row, x.Value));
+            return _sparseMatrix.OrderBy(x => x.Key.column).ThenBy(x => x.Key.row).Select(x => (x.Key.row, x.Key.column, x.Value));
         }
 
         public int GetCount(long value)
